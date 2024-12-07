@@ -1,3 +1,5 @@
+from itertools import count
+
 
 class Student:
     def __init__(self, name, surname, gender):
@@ -21,14 +23,6 @@ class Student:
     def __str__(self):
         return f'Имя: {self.name}\nФамилия: {self.surname}\nСредняя оценка за лекции: {midle_grade(self)}\nКурсы в процессе изучения: {', '.join(self.courses_in_progress)}\nЗавершенные курсы: {', '.join(self.finished_courses)}'
 
-    def sravnenie(self, other):
-        if midle_grade(self) > midle_grade(other):
-            return f'1 элемент больше второго'
-        elif midle_grade(self) < midle_grade(other):
-            return  f'2 элемент больше первого'
-        else:
-            return 'элементы равны'
-
 class Mentor:
     def __init__(self, name, surname):
         self.name = name
@@ -43,14 +37,6 @@ class Lecturer(Mentor):
 
     def __str__(self):
         return f'Имя: {self.name}\nФамилия: {self.surname}\nСредняя оценка за лекции: {midle_grade(self)}'
-
-    def sravnenie(self, other):
-        if midle_grade(self) > midle_grade(other):
-            return f'1 элемент больше второго'
-        elif midle_grade(self) < midle_grade(other):
-            return  f'2 элемент больше первого'
-        else:
-            f'элементы равны'
 
 class Reviewer(Mentor):
     def __init__(self, name, surname):
@@ -93,6 +79,16 @@ def midle_grade_po_kursu_lectorov(list_members,course):
             grades_list += i.grades[course]
     return f'среднее значение по курсу у лекторов: {sum(grades_list)/len(grades_list)}'
 
+def __eq__(self,other):
+    if midle_grade(self) == midle_grade(other):
+        return f'они равны'
+    elif midle_grade(self) > midle_grade(other):
+        return f'1-й объект больше второго'
+    else:
+        return f'2-ой объект больше первого'
+
+
+
 
 student1 = Student('vasya','bobov','m')
 student1.courses_in_progress += ['python','go']
@@ -129,8 +125,10 @@ print(lecture1)
 print()
 print(student1)
 print()
-print(lecture2.sravnenie(lecture1))
-print(student2.sravnenie(student1))
+print(__eq__(lecture2,lecture1))
+print(__eq__(lecture1,lecture1))
+print(__eq__(student1,lecture2))
+print(__eq__(student1,student2))
 print()
 students = [student1, student2]
 lecturer = [lecture1,lecture2]
